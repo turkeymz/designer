@@ -3,6 +3,21 @@
     <!--
          <method type = "json发送类型" bean = "Spring注册bean名" method = "方法名" label="备注"/>
      -->
-    <method type="hello" bean="exampleService" method="hello" label="样例代码"/>
+
+    <!-- 短信操作 -->
+    <method type="sendVerificationCode" bean="messageService" method="sendVerificationCode" label="发送验证码"/>
+
+    <!-- 用户操作 -->
+    <method type="createUser" bean="userInfoService" method="createUser" label="用户注册"/>
+    <method type="login" bean="userInfoService" method="login" label="登录"/>
+    <method type="changeUser" bean="userInfoService" method="change" label="用户更新"/>
+    <method type="getUser" bean="userInfoService" method="getUser" label="用户查询"/>
+
+    <!-- 粉丝与关注 -->
+    <method type="getRelationCount" bean="relationService" method="getCount" label="获取关注粉丝数"/>
+    <method type="getFollowUser" bean="relationService" method="getFollowUser" label="获取关注用户列表"/>
+    <method type="getFansUser" bean="relationService" method="getFansUser" label="获取粉丝用户列表"/>
+    <method type="follow" bean="relationService" method="follow" label="关注"/>
+    <method type="cancelFollow" bean="relationService" method="cancelFollow" label="取消关注"/>
 
 </serviceMethod>

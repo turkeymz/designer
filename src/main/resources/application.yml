@@ -1,11 +1,15 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /boot
+
 spring:
   datasource:
-    url: jdbc:mysql://119.23.54.155:3306/designer
-    username: root
-    password: root
+    url: jdbc:mysql://119.23.54.155:3306/designer?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: ljzhong
+    password: ljzhong!
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-    #��ʼ�����Ӵ�С
     druid:
       min-idle: 5
       max-active: 10
@@ -13,8 +17,11 @@ spring:
       transaction-query-timeout: 6000
       remove-abandoned-timeout: 1800
 
+logging.level.com.dy.springboot.server.mapper: debug
 
 mypro:
   message:
-    username: root
-    password: root
+    url: http://www.api.zthysms.com/sendSms.do
+    username: cmfwhy
+    password: tKAWQs
+    exampleStr: 【柴猫科技】柴猫科技手写画板系统验证码#code#，有效时间10分钟。提示：请勿泄露验证码

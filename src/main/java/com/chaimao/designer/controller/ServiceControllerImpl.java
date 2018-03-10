@@ -1,7 +1,6 @@
 package com.chaimao.designer.controller;
 
 
-
 import com.alibaba.fastjson.JSONObject;
 import com.chaimao.designer.cache.ServiceMethodCache;
 import com.chaimao.designer.cache.ServiceMethodEntity;
@@ -21,17 +20,17 @@ public class ServiceControllerImpl {
     @Autowired
     private ApplicationContext context;
 
-    private String getService(String jsonStr, String type) throws Exception {
-        String result = "";
+    private Object getService(String jsonStr, String type) throws Exception {
+
         ServiceMethodEntity sm = ServiceMethodCache.map.get(type);
         String className = sm.getClassName();
         String methodName = sm.getMethodName();
         //利用spring工具类反射进java
         Object o = context.getBean(className);
         Method m = ReflectionUtils.findMethod(o.getClass(), methodName, String.class);
-        result = (String) ReflectionUtils.invokeMethod(m, o, jsonStr);
+        return ReflectionUtils.invokeMethod(m, o, jsonStr);
 
-        return result;
+
     }
 
     public String taskDistribution(String type, String jsonStr) {
@@ -40,10 +39,11 @@ public class ServiceControllerImpl {
         String state = "-1";
         JSONObject result_json = new JSONObject();
         try {
-            data = this.getService(jsonStr, type);//开始进行任务分发
+            Object result = this.getService(jsonStr, type);
+
             message = "请求成功";
             state = "0";
-            result_json.put("data", data);
+            result_json.put("data", result);
             result_json.put("message", message);
             result_json.put("state", state);
             return result_json.toString();
