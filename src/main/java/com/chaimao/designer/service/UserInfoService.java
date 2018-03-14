@@ -1,6 +1,7 @@
 package com.chaimao.designer.service;
 
 import com.chaimao.designer.entity.UserInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @Author: cmxu
@@ -20,4 +21,7 @@ public interface UserInfoService {
 
     //用户查询
     UserInfo getUser(String jsonStr) throws Exception;
+
+    //更改头像
+    String uploadHead(MultipartFile file,String jsonStr)throws Exception;
 }

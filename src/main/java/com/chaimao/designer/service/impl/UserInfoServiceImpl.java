@@ -1,13 +1,16 @@
 package com.chaimao.designer.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.chaimao.designer.config.SysConfig;
 import com.chaimao.designer.mapper.UserInfoMapper;
 import com.chaimao.designer.entity.UserInfo;
 import com.chaimao.designer.service.UserInfoService;
+import com.chaimao.designer.util.FileUtil;
 import com.chaimao.designer.util.TimeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -23,6 +26,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
     private UserInfoMapper userInfoMapper;
+    @Autowired
+    SysConfig sysConfig;
 
     /**
      * 用户注册
@@ -96,7 +101,6 @@ public class UserInfoServiceImpl implements UserInfoService {
     public String change(String jsonStr) throws Exception {
         log.info("【用户更新】{}", jsonStr);
         List<UserInfo> re_userList = null;
-        JSONObject jsonObject = JSONObject.parseObject(jsonStr);
 
         UserInfo userInfo = JSONObject.parseObject(jsonStr, UserInfo.class);
 
@@ -129,6 +133,38 @@ public class UserInfoServiceImpl implements UserInfoService {
             throw new Exception("用户查询失败");
         }
         return re_userList.get(0);
+    }
+
+    /**
+     * 更改用户头像
+     *
+     * @param file
+     * @param jsonStr
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public String uploadHead(MultipartFile file, String jsonStr) throws Exception {
+        log.info("【用户头像更新】{}", jsonStr);
+
+        List<UserInfo> re_userList = null;
+        //获取数据
+        JSONObject jsonObject = JSONObject.parseObject(jsonStr);
+        String userno = jsonObject.getString("userno");
+        //String userno = "1520679920826";
+        //查询用户
+        UserInfo userInfo = userInfoMapper.getUserByNo(userno);
+        //创建文件名称
+        String headName = "head_"+userno+".jpg";
+        //上传文件至服务器
+        FileUtil.uploadFile(file.getBytes(),sysConfig.getHeadurl(),headName);
+        //保存文件路径
+        userInfo.setHeadurl(sysConfig.getHeadurl()+headName);
+        if(userInfoMapper.updateUser(userInfo) == 0){
+            log.error("【用户头像更新】更新失败.");
+            throw new RuntimeException("【用户头像更新】更新失败.");
+        }
+        return sysConfig.getHeadurl()+headName;
     }
 
 }

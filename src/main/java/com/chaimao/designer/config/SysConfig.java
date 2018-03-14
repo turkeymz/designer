@@ -19,6 +19,10 @@ import java.util.HashMap;
 @Data
 @NoArgsConstructor
 public class SysConfig {
-
+    //短信配置
     private HashMap<String,String> message = new HashMap<>();
+    //头像保存路径
+    private String headurl;
+    //作品保存路径
+    private String arturl;
 }

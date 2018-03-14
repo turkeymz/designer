@@ -25,3 +25,5 @@ mypro:
     username: cmfwhy
     password: tKAWQs
     exampleStr: 【柴猫科技】柴猫科技手写画板系统验证码#code#，有效时间10分钟。提示：请勿泄露验证码
+  headurl: D:\IdeaProjects\designer\src\main\resources\file\
+  arturl: D:\IdeaProjects\designer\src\main\resources\file\

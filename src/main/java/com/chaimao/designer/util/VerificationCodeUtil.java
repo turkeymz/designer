@@ -16,10 +16,23 @@ public class VerificationCodeUtil {
      */
     public static String createFourBitCode(){
         String str="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        return create(str);
+    }
+
+    /**
+     * 生成4位数字
+     * @return
+     */
+    public static String createFourNo(){
+        String str="0123456789";
+        return create(str);
+    }
+
+    private static String create(String rule){
         StringBuilder sb=new StringBuilder(4);
         for(int i=0;i<4;i++)
         {
-            char ch=str.charAt(new Random().nextInt(str.length()));
+            char ch=rule.charAt(new Random().nextInt(rule.length()));
             sb.append(ch);
         }
         return sb.toString();

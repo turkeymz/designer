@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>uploadimg.html</title>
+
+    <meta name="keywords" content="keyword1,keyword2,keyword3"></meta>
+    <meta name="description" content="this is my page"></meta>
+    <meta name="content-type" content="text/html; charset=UTF-8"></meta>
+	<script type="text/javascript" src="js/jquery.min.js" ></script>
+
+</head>
+<script>
+
+    function fileSubmit() {
+        var formData = new FormData();
+        formData.append("file",document.getElementById("FileUpload").files[0]);
+
+        var sJson = {"userno":"1520679920826"};
+        var sToken = "uploadHead";
+        formData.append("sJson",JSON.stringify(sJson))
+        formData.append("sToken",sToken)
+        alert(formData);
+        $.ajax({
+            url: "http://localhost:8080/boot/image/uploadImage.do",
+            data:  formData,
+            type: "POST",
+            dataType: "json",
+            cache: false,//上传文件无需缓存
+            processData: false,//用于对data参数进行序列化处理 这里必须false
+            contentType: false, //必须
+
+            success: function (data) {
+                alert("success");
+
+            },
+            error:function(data,type, err){  
+             alert("ajax错误类型："+type);  
+             alert(err);  
+        }  
+        })
+
+    }
+</script>
+<body>
+    图片<input id="FileUpload" type="file" name="file"/>
+    <input type="button" value="上传" onclick="fileSubmit()"/>
+</body>
+
+</html>

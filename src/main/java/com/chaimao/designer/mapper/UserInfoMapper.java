@@ -34,6 +34,10 @@ public interface UserInfoMapper {
             "</script> ")
     public int updateUser(UserInfo user);
 
+    //根据用户编号查询用户
+    @Select("select * from user_info where userno = #{userno}")
+    UserInfo getUserByNo(@Param("userno") String userno);
+
     //根据用户编号集合查询用户集合
     @Select("<script> " +
             "select * from user_info " +
